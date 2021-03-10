@@ -5,8 +5,8 @@ Maintained by vfinkel75. Contributions from veeceeoh, ronvandegraaf, tmleafs & g
 Install manually or using GitHub integration with these settings:
 ```
 Owner: vfinkel75
-Name: Tuya---Smartthings-Device-Handlers
-Branch: master
+Name: Tuya-Smartthings-Device-Handlers
+Branch: main
 ```
 
 ## Supported Tuya Devices
