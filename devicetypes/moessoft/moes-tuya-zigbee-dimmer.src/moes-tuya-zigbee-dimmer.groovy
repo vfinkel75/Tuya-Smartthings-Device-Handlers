@@ -58,9 +58,6 @@ private getDP_TYPE_ENUM() { "04" }
 
 private sendTuyaCommand(dp, dp_type, fncmd) {
 	log.debug "fncmd: ${fncmd}"
-//    def length = zigbee.convertToHexString(fncmd.length()/2, 4)
-//    log.debug "Lenth: ${length}"
-//	log.debug "Send tuya: ${(PACKET_ID + dp + dp_type + zigbee.convertToHexString(fncmd.length()/2, 4) + fncmd )}"
     zigbee.command(CLUSTER_TUYA, SETDATA, PACKET_ID + dp + dp_type + zigbee.convertToHexString(fncmd.length()/2, 4) + fncmd )
 }
 private getPACKET_ID() {
@@ -70,8 +67,6 @@ private getPACKET_ID() {
 
 // Parse incoming device messages to generate events
 def parse(String description) {
-    //log.debug "description is $description"
-
     def event = zigbee.getEvent(description)
     if (event) {
         sendEvent(event)
@@ -79,9 +74,7 @@ def parse(String description) {
         map = parseReadAttr(description)
     } else if (description?.startsWith('catchall:')) {
     	Map descMap = zigbee.parseDescriptionAsMap(description)		
-		//log.debug "descMAP: ${descMap}"
         def catchall = zigbee.parse(description)
-        //log.debug "See map is ${catchall}"
         if (catchall.clusterId == 0xEF00) {
         	if ( descMap?.command == "01" || descMap?.command == "02" ) {
 				def dp = zigbee.convertHexToInt(descMap?.data[2])
@@ -90,7 +83,6 @@ def parse(String description) {
                 if (dp == 1) { // ON OFF
                 	if (fncmd == 1) {sendEvent( name: 'switch', value: 'on')}
                 	else if (fncmd == 0) {sendEvent( name: 'switch', value: 'off')}
-                
                 }
                 else if (dp == 2) { //LEVEL
                 	def Level = fncmd/10
@@ -117,19 +109,14 @@ def parse(String description) {
 
 
 def off() {
-//    log.debug "device off"
     sendTuyaCommand("01", DP_TYPE_ENUM, zigbee.convertToHexString(0))
 }
 
 def on() {
-//    log.debug "device on"
     sendTuyaCommand("01", DP_TYPE_ENUM, zigbee.convertToHexString(1))
 }
 
 def setLevel(value) {
-
-//    log.debug "set level: $value"
-    //sendTuyaCommand("02", DP_TYPE_VALUE, zigbee.convertToHexString(Math.ceil(value*10), 8))
   	def cmds = sendTuyaCommand("02", DP_TYPE_VALUE, zigbee.convertToHexString(value*10, 8))
 	cmds.each{ sendHubCommand(new physicalgraph.device.HubAction(it)) }
 }
