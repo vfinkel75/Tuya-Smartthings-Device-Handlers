@@ -1,4 +1,4 @@
-# Tuya---Smartthings-Device-Handlers
+# Tuya-Smartthings-Device-Handlers
 Ported Tuya DH to Smartthings
 Maintained by vfinkel75. Contributions from veeceeoh, ronvandegraaf, tmleafs & gn0st1c.
 
