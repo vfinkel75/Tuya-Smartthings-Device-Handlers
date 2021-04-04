@@ -11,3 +11,4 @@ Branch: main
 
 ## Supported Tuya Devices
 MOES Sensor Dimmer (Model:TS0601, manufacturer: _TZE200_9i9dt8is)
+Earda Sensor Dimmer (Model:EDM-1ZAA-UE, manufacturer: _TZE200_9i9dt8is)
